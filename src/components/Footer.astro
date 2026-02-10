@@ -1,0 +1,85 @@
+---
+const menuItems = [
+  { text: "ABOUT", href: "#about" },
+  { text: "SHOPS", href: "#shops" },
+  { text: "HISTORY", href: "#history" },
+  { text: "BACKGROUND", href: "#background" },
+  { text: "SCHEDULE & EVENTS", href: "#event" },
+  { text: "ACCESS", href: "#access" },
+];
+---
+
+<footer class="c-footer">
+  <div class="l-container">
+    <div class="c-footer--inner">
+      <small class="c-footer--small">
+        ©2023 梅屋 All rights reserved. <br class="hide-md" />
+        Operated by{" "}
+        <a
+          href="https://yui-r.design"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          結リノベデザイン
+        </a>
+      </small>
+      <ul class="c-footer--menu">
+        {
+          menuItems.map((item) => (
+            <li>
+              <a href={item.href}>{item.text}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<style lang="scss">
+  .c-footer {
+    background-color: var(--color-main);
+    color: white;
+    padding-top: 48rem;
+    padding-bottom: 48rem;
+  }
+
+  .c-footer--inner {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
+    gap: 24rem;
+
+    @include g.mq() {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+
+  .c-footer--small {
+    font-size: 12rem;
+    line-height: 16rem;
+    font-weight: 500;
+    text-align: center;
+
+    @include g.mq() {
+      text-align: left;
+    }
+  }
+
+  .c-footer--menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20rem;
+    font-size: 12rem;
+    line-height: 16rem;
+
+    @include g.mq() {
+      flex-direction: row;
+      font-size: 14rem;
+      line-height: 20rem;
+    }
+  }
+</style>

@@ -1,0 +1,405 @@
+---
+const menuItems = [
+  { text: "TOP", href: "#top", target: "_self", rel: "" },
+  { text: "ABOUT", href: "#about", target: "_self", rel: "" },
+  { text: "SHOPS", href: "#shops", target: "_self", rel: "" },
+  { text: "HISTORY", href: "#history", target: "_self", rel: "" },
+  { text: "BACKGROUND", href: "#background", target: "_self", rel: "" },
+  { text: "SCHEDULE & EVENTS", href: "#event", target: "_self", rel: "" },
+  { text: "ACCESS", href: "#access", target: "_self", rel: "" },
+  {
+    text: "FACEBOOK",
+    href: "https://www.facebook.com/umeya.kurogi",
+    target: "_blank",
+    rel: "noopener noreferrer",
+  },
+  {
+    text: "INSTAGRAM",
+    href: "https://www.instagram.com/umeya_kurogi/",
+    target: "_blank",
+    rel: "noopener noreferrer",
+  },
+];
+---
+
+<header class="c-header">
+  <div class="header-logo">
+    <h1>
+      <a href="#top">
+        <img
+          src="/logo_square_w.svg"
+          width="100"
+          height="100"
+          alt="古民家梅屋"
+        />
+      </a>
+    </h1>
+  </div>
+  <div id="btn-menu" class="btn-menu">
+    <div>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <div class="nav-bg"></div>
+  <nav class="nav-modal">
+    <ul>
+      {
+        menuItems.map((item) => (
+          <li>
+            <a target={item.target} rel={item.rel} href={item.href}>
+              {item.text}
+            </a>
+          </li>
+        ))
+      }
+      <!-- <li>TODO: locale buttons</li> -->
+    </ul>
+  </nav>
+</header>
+
+<style lang="scss">
+  .c-header {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--z-index-header);
+  }
+
+  .header-logo {
+    width: 100rem;
+    aspect-ratio: 1/ 1;
+    position: absolute;
+    z-index: var(--z-index-modal-btn);
+    left: 0;
+    top: 0;
+    clip-path: circle(100% at 0 0);
+    background-color: var(--color-main--transparent);
+
+    h1 {
+      position: absolute;
+      width: 80rem;
+      aspect-ratio: 1 / 1;
+      top: 50%;
+      left: 50%;
+      translate: calc(-50% - 10rem) calc(-50% - 10rem);
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+
+    @include g.mq() {
+      width: 140rem;
+
+      h1 {
+        width: 64rem;
+        translate: calc(-50% - 15rem) calc(-50% - 15rem);
+      }
+    }
+  }
+
+  .btn-menu {
+    width: 100rem;
+    aspect-ratio: 1/ 1;
+    z-index: var(--z-index-modal-btn);
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    right: 0;
+    clip-path: circle(100% at 100% 0);
+    backdrop-filter: blur(3rem);
+    background-color: var(--color-main--transparent);
+
+    div {
+      width: 40rem;
+      aspect-ratio: 1 / 1;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      translate: calc(-50% + 10rem) calc(-50% - 10rem);
+      z-index: 1;
+
+      span {
+        position: absolute;
+        display: block;
+        background-color: white;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 4rem;
+
+        &:nth-of-type(1) {
+          translate: -50% calc(-50% - 12rem);
+          transition:
+            translate 0.3s,
+            rotate 0.3s;
+          transition-delay: 0s;
+        }
+
+        &:nth-of-type(2) {
+          translate: -50% calc(-50%);
+          clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+          transition: clip-path 0.3s;
+          transition-delay: 0.3s;
+        }
+
+        &:nth-of-type(3) {
+          translate: -50% calc(-50% + 12rem);
+          transition:
+            translate 0.3s,
+            rotate 0.3s;
+          transition-delay: 0s;
+        }
+      }
+    }
+
+    @include g.mq() {
+      width: 140rem;
+      div {
+        translate: calc(-50% + 15rem) calc(-50% - 15rem);
+      }
+    }
+
+    &.active {
+      div {
+        span {
+          &:nth-of-type(1) {
+            translate: -50% -50%;
+            rotate: 45deg;
+            transition-delay: 0.3s;
+          }
+
+          &:nth-of-type(2) {
+            clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+            transition-delay: 0s;
+          }
+
+          &:nth-of-type(3) {
+            translate: -50% -50%;
+            rotate: -45deg;
+            transition-delay: 0.3s;
+          }
+        }
+      }
+    }
+  }
+
+  .nav-bg {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    z-index: var(--z-index-modal-bg);
+    width: 200%;
+    height: 200%;
+    translate: -50% -50%;
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(3px);
+    border-radius: 100%;
+    scale: 0;
+
+    @include g.mq() {
+      width: 150vh;
+      height: 150vh;
+      // translate: -50vh -25vh;
+    }
+  }
+
+  .nav-modal {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: var(--z-index-modal);
+    opacity: 0;
+    pointer-events: none;
+
+    &::backdrop {
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    ul {
+      display: flex;
+      flex-direction: column;
+      gap: 12rem;
+
+      li {
+        text-transform: uppercase;
+        font-weight: 500;
+        text-align: center;
+        font-size: 20rem;
+        line-height: 28rem;
+
+        a,
+        button {
+          cursor: pointer;
+          display: inline-block;
+          width: 100%;
+          transition: rotate 0.1s;
+        }
+
+        &::after {
+          content: "";
+          display: block;
+          width: 100%;
+          height: 2rem;
+          background-color: var(--color-font);
+          opacity: 0.7;
+          margin-top: 2rem;
+          clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+          transition: clip-path 0.3s;
+        }
+
+        &:last-of-type {
+          display: flex;
+          flex-direction: row;
+          gap: 8rem;
+
+          a,
+          button {
+            padding-top: 8rem;
+            padding-bottom: 8rem;
+          }
+
+          &::after {
+            display: none;
+          }
+
+          button {
+            position: relative;
+
+            span {
+              position: absolute;
+              background-color: var(--color-font);
+              display: block;
+              transition: clip-path 0.15s linear;
+
+              &:nth-of-type(1) {
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 1rem;
+                clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+                transition-delay: 0.45s;
+              }
+
+              &:nth-of-type(2) {
+                right: 0;
+                top: 0;
+                bottom: 0;
+                width: 1rem;
+                clip-path: polygon(0 0, 100% 0, 0 0, 100% 0);
+                transition-delay: 0.3s;
+              }
+
+              &:nth-of-type(3) {
+                left: 0;
+                right: 0;
+                bottom: 0;
+                height: 1rem;
+                clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+                transition-delay: 0.15s;
+              }
+
+              &:nth-of-type(4) {
+                left: 0;
+                top: 0;
+                bottom: 0;
+                width: 1rem;
+                clip-path: polygon(0 100%, 100% 100%, 0 100%, 100% 100%);
+                transition-delay: 0s;
+              }
+            }
+
+            &:hover {
+              span {
+                &:nth-of-type(1) {
+                  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+                  transition-delay: 0s;
+                }
+
+                &:nth-of-type(2) {
+                  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+                  transition-delay: 0.15s;
+                }
+
+                &:nth-of-type(3) {
+                  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+                  transition-delay: 0.3s;
+                }
+
+                &:nth-of-type(4) {
+                  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+                  transition-delay: 0.45s;
+                }
+              }
+            }
+          }
+        }
+
+        &:active {
+          a {
+            rotate: 5deg;
+          }
+        }
+
+        &:hover {
+          &::after {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+          }
+        }
+      }
+    }
+  }
+</style>
+
+<script>
+  import { gsap } from "gsap";
+  const btnMenu = document.getElementById("btn-menu") as HTMLDivElement;
+  const navModal = document.querySelector(".nav-modal") as HTMLDivElement;
+  const navBg = document.querySelector(".nav-bg") as HTMLDivElement;
+  const DURATION = 0.4;
+
+  const toggleNav = (open: boolean) => {
+    if (open) {
+      gsap.to(navBg, {
+        scale: 1,
+        pointerEvents: "auto",
+        duration: DURATION,
+      });
+      gsap.to(navModal, {
+        opacity: 1,
+        pointerEvents: "auto",
+        duration: DURATION,
+        delay: DURATION,
+      });
+    } else {
+      gsap.to(navBg, {
+        scale: 0,
+        pointerEvents: "none",
+        duration: DURATION,
+        delay: DURATION,
+      });
+      gsap.to(navModal, {
+        opacity: 0,
+        pointerEvents: "none",
+        duration: DURATION,
+      });
+    }
+  };
+
+  window.addEventListener("load", () => {
+    btnMenu.addEventListener("click", () => {
+      btnMenu.classList.toggle("active");
+      toggleNav(btnMenu.classList.contains("active"));
+    });
+  });
+</script>

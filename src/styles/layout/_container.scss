@@ -1,0 +1,10 @@
+@use "../global" as g;
+
+.l-container {
+  padding: 0 16rem;
+
+  @include g.mq("lg") {
+    // padding: 0 320rem;
+    padding: 0 220rem;
+  }
+}
