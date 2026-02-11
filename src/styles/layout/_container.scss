@@ -1,10 +1,79 @@
 @use "../global" as g;
 
+.l-section {
+  padding-top: 64rem;
+  padding-bottom: 32rem;
+
+  @include g.mq("lg") {
+    padding-top: 80rem;
+    padding-bottom: 40rem;
+  }
+}
+
 .l-container {
   padding: 0 16rem;
 
   @include g.mq("lg") {
-    // padding: 0 320rem;
     padding: 0 220rem;
+  }
+
+  @include g.mq("xxl") {
+    padding: 0 320rem;
+  }
+}
+
+.l-col-row-outer {
+  padding-left: 0;
+  padding-right: 0;
+
+  @include g.mq() {
+    padding-left: 16rem;
+    padding-right: 16rem;
+  }
+}
+
+.l-col-row-container {
+  display: flex;
+  gap: 32rem;
+  align-items: center;
+  flex-direction: column;
+
+  &>div {
+    &:first-of-type {
+      width: 100%;
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 10rem 10rem 0 var(--color-main--transparent);
+      border-radius: 15rem;
+
+      &::before {
+        content: "";
+        display: block;
+        position: absolute;
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0.05);
+      }
+    }
+
+    picture,
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  @include g.mq() {
+    flex-direction: row;
+
+    &>div {
+      &:first-of-type {
+        width: 40%;
+      }
+    }
+
+    &.reverse {
+      flex-direction: row-reverse;
+    }
   }
 }

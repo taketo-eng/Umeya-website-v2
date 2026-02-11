@@ -8,24 +8,49 @@
   }
 
   @include g.mq("lg") {
+    --base-vw: 1600;
+  }
+
+  @include g.mq("xl") {
     --base-vw: 1920;
   }
 }
 
+::selection {
+  background: var(--color-main);
+  color: #fff;
+}
+
 html {
   font-size: calc(100vw / var(--base-vw));
+  scroll-behavior: smooth;
+  scroll-padding-top: 70px;
 }
 
 body {
-  font-size: 14rem;
+  font-size: 16rem;
   font-family: var(--font-jp);
   font-weight: 400;
   font-style: normal;
 
   @include g.mq() {
-    font-size: 16rem;
+    font-size: 18rem;
   }
 }
+
+p {
+  font-size: 16rem;
+  line-height: 1.8;
+
+  @include g.mq() {
+    font-size: 18rem;
+  }
+}
+
+b {
+  color: var(--color-main);
+}
+
 
 .hide-md {
   @include g.mq() {

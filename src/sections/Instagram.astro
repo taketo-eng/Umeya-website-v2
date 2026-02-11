@@ -1,0 +1,83 @@
+---
+import Title from "../components/Title.astro";
+import { getInstagramPosts } from "../lib/instagram";
+
+const instagramData = await getInstagramPosts();
+---
+
+{
+  instagramData && (
+    <section id="instagram" class="l-section">
+      <div class="l-container">
+        <Title title="インスタグラム" bgTitle="Instagram" />
+        <div class="l-col-row-outer">
+          <ul class="i-list">
+            {instagramData.map((post) => (
+              <li class="i-list--item">
+                <a
+                  href={post.permalink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <div class="i-list--item--inner">
+                    <div>
+                      <img
+                        loading="lazy"
+                        src={
+                          post.media_type != "VIDEO"
+                            ? post.media_url
+                            : post.thumbnail_url
+                        }
+                        alt={post.caption}
+                      />
+                    </div>
+                  </div>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<style lang="scss">
+  .i-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .i-list--item {
+    width: 50%;
+    transition: opacity 0.3s ease;
+    &:hover {
+      opacity: 0.8;
+    }
+
+    @include g.mq() {
+      width: 25%;
+    }
+  }
+
+  .i-list--item--inner {
+    width: 100%;
+    div {
+      position: relative;
+      height: 0;
+      width: 100%;
+      overflow: hidden;
+      padding-top: 100%;
+    }
+
+    img {
+      position: absolute;
+      display: block;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+</style>

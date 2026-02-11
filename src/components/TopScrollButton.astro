@@ -1,0 +1,45 @@
+---
+
+---
+
+<a class="btn-top-scroll" href="#top">
+  <img class="w-full" src="/top_btn.svg" width="32" height="32" alt="top" />
+</a>
+
+<style lang="scss">
+  .btn-top-scroll {
+    position: fixed;
+    right: 16rem;
+    bottom: 16rem;
+    width: 32rem;
+    aspect-ratio: 1/ 1;
+
+    @include g.mq() {
+      width: 40rem;
+    }
+
+    &::before {
+      content: "";
+      display: block;
+      position: absolute;
+      inset: 0;
+      background-color: var(--main);
+      z-index: -1;
+      border-radius: 6rem;
+      scale: 1;
+      transition:
+        scale 0s,
+        opacity 0s;
+    }
+
+    &:hover {
+      &::before {
+        scale: 1.2;
+        opacity: 0;
+        transition:
+          scale 0.3s ease-in-out,
+          opacity 0.5s;
+      }
+    }
+  }
+</style>

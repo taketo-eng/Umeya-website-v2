@@ -1,0 +1,47 @@
+---
+import Title from "../components/Title.astro";
+---
+
+<section id="about" class="l-section">
+  <div class="l-container">
+    <Title title="梅屋とは" bgTitle="ABOUT" />
+    <div class="l-col-row-outer">
+      <div class="l-col-row-container">
+        <div>
+          <picture>
+            <source
+              srcset="/sections/about.webp"
+              width="800"
+              height="505"
+              media="(min-width: 1024px)"
+            />
+            <img
+              src="/sections/about_sp.webp"
+              width="500"
+              height="316"
+              alt="梅屋の写真"
+            />
+          </picture>
+        </div>
+        <div>
+          <p>
+            梅屋は、<b>「いつか自分のお店を持ちたい」</b>
+            と考える人のためのチャレンジショップ型シェアスペースです。 いきなり店舗を構えることは、大きなコストとリスクを伴い、誰にとっても高いハードルになります。<br
+            />
+            梅屋では、シェアスペースを活用することで、より小さな一歩から挑戦を始めることができます。<br
+            />
+            ここでお客様と出会い、ファンを作り、経験を積む。そして将来、黒木町で自分のお店を持つ。そんな夢を持つ人たちを、梅屋は応援します。<br
+            />
+            <br />
+            梅屋は、<b>挑戦する人と地域をつなぐ場所</b>です。
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  // .l-section {
+  // }
+</style>

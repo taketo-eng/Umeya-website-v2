@@ -1,0 +1,99 @@
+---
+
+---
+
+<div class="keyvisual">
+  <picture>
+    <source
+      srcset="/kv/kv-1.webp"
+      width="1915"
+      height="957"
+      media="(min-width: 768px)"
+    />
+    <img
+      src="/kv/kv_sp-1.webp"
+      width="500"
+      height="756"
+      alt="古民家梅屋キービジュアル"
+    />
+  </picture>
+  <div></div>
+  <div class="catch">
+    <p>挑戦する人を梅屋から</p>
+  </div>
+</div>
+
+<style lang="scss">
+  .keyvisual {
+    position: relative;
+
+    &::after {
+      content: "";
+      display: block;
+      position: absolute;
+      inset: 0;
+      background-color: #000;
+      opacity: 0.15;
+    }
+
+    picture,
+    img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+  }
+  @keyframes catchFadeIn {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
+  .catch {
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    p {
+      writing-mode: vertical-rl;
+      color: #fff;
+      font-family: var(--font-serif-jp);
+
+      font-size: 30rem;
+      font-weight: bold;
+      text-shadow: 0 0 10rem var(--color-main);
+      opacity: 0;
+      animation-delay: 1s;
+      animation: catchFadeIn 0.6s forwards;
+    }
+
+    &.not-jp {
+      p {
+        writing-mode: horizontal-tb;
+        max-width: calc(100% - 32rem);
+        margin: 0 auto;
+        translate: 0 0;
+        font-size: 25rem;
+      }
+    }
+
+    @include g.mq() {
+      p {
+        font-size: 36rem;
+      }
+
+      &.not-jp {
+        p {
+          font-size: 36rem;
+        }
+      }
+    }
+  }
+</style>

@@ -1,0 +1,115 @@
+---
+import Title from "../components/Title.astro";
+---
+
+<section id="history" class="l-section">
+  <div class="l-container">
+    <Title title="梅屋の歴史" bgTitle="history" />
+    <div class="l-col-row-outer">
+      <div class="l-col-row-container reverse">
+        <div>
+          <picture>
+            <source
+              srcset="/sections/history.webp"
+              width="800"
+              height="549"
+              media="(min-width: 1024px)"
+            />
+            <img
+              src="/sections/history.webp"
+              width="500"
+              height="343"
+              alt="梅屋の冬景色"
+            />
+          </picture>
+        </div>
+        <div>
+          <ul class="history-list">
+            <li>
+              <h3>明治期</h3>
+              <p>
+                1902年(明治35年)に主屋が建築され、<b>油屋という料亭</b
+                >が営まれていました
+              </p>
+            </li>
+            <li>
+              <h3>大正期</h3>
+              <p>
+                それまで料亭を営んでいた町家を<b>松延新三郎</b>が買い取り、<b
+                  >梅屋</b
+                >と号して薬種商を営み始め、薬やダイナマイトなどの火薬類を取り扱っていました
+              </p>
+            </li>
+            <li>
+              <h3>昭和期</h3>
+              <p>
+                1902年(明治35年)に主屋が建築され、油屋という料亭が営まれていました
+              </p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  .history-list {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    gap: 20rem;
+
+    &::after {
+      content: "";
+      position: absolute;
+      display: block;
+      background-color: var(--color-main);
+      left: 0;
+      top: 8rem;
+      width: 1rem;
+      height: calc(100% - 8rem);
+    }
+
+    li {
+      position: relative;
+      padding-left: 20rem;
+
+      h3 {
+        font-size: 20rem;
+        line-height: 28rem;
+        font-weight: bold;
+        color: var(--color-main);
+      }
+
+      p {
+        font-size: 16rem;
+        color: var(--color-font);
+
+        b {
+          color: var(--color-main);
+        }
+      }
+
+      &::after {
+        content: "";
+        display: block;
+        top: 6rem;
+        left: -8rem;
+        width: 16rem;
+        aspect-ratio: 1 / 1;
+        position: absolute;
+        border-radius: 100%;
+        background-color: var(--color-main);
+      }
+    }
+
+    @include g.mq() {
+      li {
+        p {
+          font-size: 18rem;
+        }
+      }
+    }
+  }
+</style>

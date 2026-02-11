@@ -1,0 +1,130 @@
+---
+import type { Event } from "../lib/types/microcms";
+
+const { schedules, slideName } = Astro.props;
+---
+
+<div class={`l-slide-outer splide ${slideName}`}>
+  <div class="splide__track">
+    <ul class="l-slide splide__list">
+      {
+        schedules.contents.map((content: Event) => (
+          <li
+            class={`c-card splide__slide ${content.category[0] == "event" ? "is-event" : ""}`}
+          >
+            <span
+              class={`c-card--category ${content.category[0] == "event" ? "is-event" : ""}`}
+            >
+              {content.category[0] == "event" ? "イベント" : "オープン日"}
+            </span>
+            <h3>{content.title ?? "オープン日"}</h3>
+            <p>日付 : {new Date(content.start_time).toLocaleDateString()}</p>
+            <time datetime={content.start_time}>
+              時間:{" "}
+              {new Date(content.start_time).toLocaleTimeString(undefined, {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}{" "}
+              ~{" "}
+              {new Date(content.end_time).toLocaleTimeString(undefined, {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+            </time>
+            {content.description && (
+              <p class="c-card--description" set:html={content.description} />
+            )}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <div class="arrows splide__arrows">
+    <button class="splide__arrow splide__arrow--prev prev">
+      <img src="/prev.svg" alt="Previous" width="32" height="32" />
+    </button>
+    <button class="splide__arrow splide__arrow--next next">
+      <img src="/next.svg" alt="Next" width="32" height="32" />
+    </button>
+  </div>
+</div>
+
+<style lang="scss">
+  .l-slide-outer {
+    padding: 0 16rem;
+    position: relative;
+  }
+
+  .l-slide {
+    padding: 12rem 2rem !important;
+  }
+
+  .c-card {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    min-width: 100%;
+    border-radius: 6rem;
+    background-color: white;
+    padding: 32rem 24rem 16rem;
+    filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07))
+      drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
+
+    &.is-event {
+      background-color: var(--color-main--light);
+    }
+
+    h3 {
+      color: var(--color-font);
+      font-weight: bold;
+      border-bottom: 1rem solid var(--color-font);
+      padding-bottom: 4rem;
+      margin-bottom: 4rem;
+      font-size: 20rem;
+    }
+
+    @include g.mq() {
+      width: 320rem;
+      min-width: 320rem;
+    }
+  }
+
+  .c-card--category {
+    position: absolute;
+    top: 8rem;
+    right: 8rem;
+    color: white;
+    background-color: var(--color-sub);
+    padding: 4rem 8rem;
+    font-size: 12rem;
+    border-radius: 8rem;
+
+    &.is-event {
+      background-color: var(--color-main);
+    }
+  }
+
+  .arrows {
+    button {
+      width: 32rem;
+      aspect-ratio: 1 / 1;
+      position: absolute;
+      top: 50%;
+      translate: 0 -50%;
+
+      &.prev {
+        left: -15rem;
+      }
+
+      &.next {
+        right: -16rem;
+      }
+
+      // disabled
+      &[disabled] {
+        opacity: 0.4;
+      }
+    }
+  }
+</style>

@@ -4,7 +4,6 @@ const menuItems = [
   { text: "ABOUT", href: "#about", target: "_self", rel: "" },
   { text: "SHOPS", href: "#shops", target: "_self", rel: "" },
   { text: "HISTORY", href: "#history", target: "_self", rel: "" },
-  { text: "BACKGROUND", href: "#background", target: "_self", rel: "" },
   { text: "SCHEDULE & EVENTS", href: "#event", target: "_self", rel: "" },
   { text: "ACCESS", href: "#access", target: "_self", rel: "" },
   {
@@ -35,13 +34,13 @@ const menuItems = [
       </a>
     </h1>
   </div>
-  <div id="btn-menu" class="btn-menu">
+  <button type="button" id="btn-menu" class="btn-menu">
     <div>
       <span></span>
       <span></span>
       <span></span>
     </div>
-  </div>
+  </button>
   <div class="nav-bg"></div>
   <nav class="nav-modal">
     <ul>
@@ -363,15 +362,17 @@ const menuItems = [
 
 <script>
   import { gsap } from "gsap";
-  const btnMenu = document.getElementById("btn-menu") as HTMLDivElement;
+  const btnMenu = document.getElementById("btn-menu") as HTMLButtonElement;
   const navModal = document.querySelector(".nav-modal") as HTMLDivElement;
   const navBg = document.querySelector(".nav-bg") as HTMLDivElement;
+  const navButtons = document.querySelectorAll(".nav-modal a");
   const DURATION = 0.4;
 
   const toggleNav = (open: boolean) => {
     if (open) {
+      document.body.style.overflow = "hidden";
       gsap.to(navBg, {
-        scale: 1,
+        scale: 1.3,
         pointerEvents: "auto",
         duration: DURATION,
       });
@@ -382,6 +383,7 @@ const menuItems = [
         delay: DURATION,
       });
     } else {
+      document.body.style.overflow = "";
       gsap.to(navBg, {
         scale: 0,
         pointerEvents: "none",
@@ -400,6 +402,13 @@ const menuItems = [
     btnMenu.addEventListener("click", () => {
       btnMenu.classList.toggle("active");
       toggleNav(btnMenu.classList.contains("active"));
+    });
+
+    navButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        btnMenu.classList.remove("active");
+        toggleNav(false);
+      });
     });
   });
 </script>
