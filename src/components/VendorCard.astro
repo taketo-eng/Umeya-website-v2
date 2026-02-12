@@ -1,0 +1,160 @@
+---
+import type { Vendor } from "../lib/types/microcms.ts";
+const { vendor } = Astro.props as { vendor: Vendor };
+
+import { Picture, Image } from "astro:assets";
+import arrowImage from "../assets/arrow-white.svg";
+import foodImage from "../assets/vendor-category/food.svg";
+import cafeImage from "../assets/vendor-category/coffee.svg";
+
+import { useTranslations } from "../i18n/utils";
+const { currentLocale } = Astro;
+const lang = (currentLocale || "ja") as "ja" | "en" | "de";
+const t = useTranslations(lang);
+
+const categoriesWithImage = ["飲食", "カフェ"];
+const categoryClass = (category: string) => {
+  return {
+    飲食: "food",
+    カフェ: "cafe",
+    物販: "goods",
+    その他: "other",
+  }[category];
+};
+const categoryLocaleText = (category: string) => {
+  return {
+    飲食: t("vendor.category.food"),
+    カフェ: t("vendor.category.cafe"),
+    物販: t("vendor.category.goods"),
+    その他: t("vendor.category.other"),
+  }[category];
+};
+---
+
+<li class="c-vendor-card splide__slide">
+  <button type="button" data-vendor_id={vendor.id}>
+    <span
+      class={`vendor-category-tag ${categoryClass(vendor.category) ? categoryClass(vendor.category) : ""}`}
+    >
+      {
+        categoriesWithImage.includes(vendor.category) && (
+          <Image
+            src={vendor.category == "飲食" ? foodImage : cafeImage}
+            width="32"
+            height="32"
+            alt={vendor.category}
+          />
+        )
+      }
+      {categoryLocaleText(vendor.category)}
+    </span>
+    <Picture
+      class="c-vendor-card--profile"
+      src={vendor.profile_image.url}
+      alt={vendor.name}
+      width={vendor.profile_image.width}
+      height={vendor.profile_image.height}
+    />
+    <p>
+      {vendor.name}
+      <Image class="c-vendor-card--arrow" src={arrowImage} alt="Arrow" />
+    </p>
+  </button>
+</li>
+
+<style lang="scss">
+  .c-vendor-card--profile,
+  .c-vendor-card--profile img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .c-vendor-card {
+    position: relative;
+    width: 100%;
+    border-radius: 12rem;
+    overflow: hidden;
+    transition:
+      scale 0.3s ease,
+      opacity 0.3s ease;
+    &:hover {
+      scale: 1.03;
+      opacity: 0.8;
+    }
+    box-shadow: 10rem 10rem 0 var(--color-main--transparent);
+
+    button {
+      vertical-align: bottom;
+    }
+
+    p {
+      position: absolute;
+      display: inline-block;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      text-align: center;
+      color: white;
+      padding: 36rem 4rem 16rem;
+      background: linear-gradient(
+        to top,
+        rgba(58, 13, 32, 0.7) 0 50%,
+        rgba(58, 13, 32, 0)
+      );
+    }
+
+    @include g.mq() {
+      width: 320rem;
+    }
+  }
+
+  .vendor-category-tag {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    padding: 8rem 16rem 8rem;
+    left: 0;
+    top: 0;
+    right: 0;
+    gap: 8rem;
+    font-size: 14rem;
+
+    font-weight: 500;
+    color: white;
+    align-items: center;
+
+    img {
+      width: 20rem;
+    }
+
+    backdrop-filter: blur(4rem);
+
+    background-color: rgba(68, 68, 68, 0.7);
+
+    &.food {
+      background-color: rgba(206, 126, 51, 0.7);
+    }
+
+    &.cafe {
+      background-color: rgba(150, 107, 80, 0.7);
+    }
+
+    &.goods {
+      background-color: rgba(80, 120, 150, 0.7);
+    }
+
+    &.other {
+      background-color: rgba(128, 108, 143, 0.7);
+    }
+  }
+
+  .c-vendor-card--arrow {
+    position: absolute;
+    right: 10rem;
+    top: calc(50% + 10rem);
+    translate: 0 -50%;
+    width: 20rem;
+    aspect-ratio: 1 / 1;
+  }
+</style>

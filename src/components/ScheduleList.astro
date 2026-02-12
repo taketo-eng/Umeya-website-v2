@@ -1,5 +1,13 @@
 ---
 import type { Event } from "../lib/types/microcms";
+import { Image } from "astro:assets";
+import prevImage from "../assets/prev.svg";
+import nextImage from "../assets/next.svg";
+
+import { useTranslations } from "../i18n/utils";
+const { currentLocale } = Astro;
+const lang = (currentLocale || "ja") as "ja" | "en" | "de";
+const t = useTranslations(lang);
 
 const { schedules, slideName } = Astro.props;
 ---
@@ -8,16 +16,18 @@ const { schedules, slideName } = Astro.props;
   <div class="splide__track">
     <ul class="l-slide splide__list">
       {
-        schedules.contents.map((content: Event) => (
+        schedules.map((content: Event) => (
           <li
             class={`c-card splide__slide ${content.category[0] == "event" ? "is-event" : ""}`}
           >
             <span
               class={`c-card--category ${content.category[0] == "event" ? "is-event" : ""}`}
             >
-              {content.category[0] == "event" ? "イベント" : "オープン日"}
+              {content.category == "event"
+                ? t("event.category.event")
+                : t("event.category.open")}
             </span>
-            <h3>{content.title ?? "オープン日"}</h3>
+            <h3>{content.title}</h3>
             <p>日付 : {new Date(content.start_time).toLocaleDateString()}</p>
             <time datetime={content.start_time}>
               時間:{" "}
@@ -32,7 +42,12 @@ const { schedules, slideName } = Astro.props;
               })}
             </time>
             {content.description && (
-              <p class="c-card--description" set:html={content.description} />
+              <p
+                class="c-card--description"
+                set:html={content.description
+                  .replace(/\n/g, "<br>")
+                  .replace(/<a /g, '<a style="color: rgb(194 18 68)" ')}
+              />
             )}
           </li>
         ))
@@ -42,10 +57,10 @@ const { schedules, slideName } = Astro.props;
 
   <div class="arrows splide__arrows">
     <button class="splide__arrow splide__arrow--prev prev">
-      <img src="/prev.svg" alt="Previous" width="32" height="32" />
+      <Image src={prevImage} alt="Previous Button" />
     </button>
     <button class="splide__arrow splide__arrow--next next">
-      <img src="/next.svg" alt="Next" width="32" height="32" />
+      <Image src={nextImage} alt="Next Button" />
     </button>
   </div>
 </div>

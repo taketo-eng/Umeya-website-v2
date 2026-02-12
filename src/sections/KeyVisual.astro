@@ -1,25 +1,30 @@
 ---
+import { Image } from "astro:assets";
+import kvImage from "../assets/kv/kv-1.webp";
+import kvSpImage from "../assets/kv/kv_sp-1.webp";
 
+import { useTranslations } from "../i18n/utils";
+const { currentLocale } = Astro;
+const lang = (currentLocale || "ja") as "ja" | "en" | "de";
+const t = useTranslations(lang);
 ---
 
 <div class="keyvisual">
-  <picture>
-    <source
-      srcset="/kv/kv-1.webp"
-      width="1915"
-      height="957"
-      media="(min-width: 768px)"
-    />
-    <img
-      src="/kv/kv_sp-1.webp"
-      width="500"
-      height="756"
-      alt="古民家梅屋キービジュアル"
-    />
-  </picture>
+  <Image
+    loading="eager"
+    class="kv pc"
+    src={kvImage}
+    alt="古民家梅屋キービジュアル"
+  />
+  <Image
+    loading="eager"
+    class="kv"
+    src={kvSpImage}
+    alt="古民家梅屋キービジュアル SP"
+  />
   <div></div>
-  <div class="catch">
-    <p>挑戦する人を梅屋から</p>
+  <div class={`catch ${lang != "ja" ? "not-jp" : ""}`}>
+    <p>{t("kv.catch")}</p>
   </div>
 </div>
 
@@ -36,11 +41,22 @@
       opacity: 0.15;
     }
 
-    picture,
-    img {
+    .kv {
       width: 100%;
       height: auto;
       display: block;
+      &.pc {
+        display: none;
+      }
+    }
+
+    @include g.mq() {
+      .kv {
+        display: none;
+        &.pc {
+          display: block;
+        }
+      }
     }
   }
   @keyframes catchFadeIn {

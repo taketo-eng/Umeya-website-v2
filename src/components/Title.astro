@@ -20,6 +20,10 @@ const { title, bgTitle } = Astro.props;
       left: 0;
       bottom: 0;
       z-index: 1;
+
+      // wrap for long title
+      line-break: anywhere;
+      hyphens: manual;
     }
 
     span {

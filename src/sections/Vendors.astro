@@ -1,0 +1,404 @@
+---
+import Title from "../components/Title.astro";
+import VendorCard from "../components/VendorCard.astro";
+import { getVendors } from "../lib/microcms";
+import type { Vendor } from "../lib/types/microcms";
+import { Image } from "astro:assets";
+import vendorCloseImage from "../assets/close-main.svg";
+import instagramImage from "../assets/sns/instagram.svg";
+import facebookImage from "../assets/sns/facebook.svg";
+import siteImage from "../assets/sns/site.svg";
+import prevImage from "../assets/prev.svg";
+import nextImage from "../assets/next.svg";
+
+import { useTranslations } from "../i18n/utils";
+const { currentLocale } = Astro;
+const lang = (currentLocale || "ja") as "ja" | "en" | "de";
+const t = useTranslations(lang);
+
+const vendors = await getVendors(lang);
+---
+
+<section id="vendors" class="l-section">
+  <div class="l-container">
+    <Title title={t("title.vendors")} bgTitle="VENDORS" />
+    <div class="l-slide-outer splide vendor-splide">
+      <div class="splide__track">
+        <ul class="l-slide splide__list">
+          {vendors.map((vendor: Vendor) => <VendorCard vendor={vendor} />)}
+        </ul>
+      </div>
+
+      <div class="arrows splide__arrows">
+        <button class="splide__arrow splide__arrow--prev prev">
+          <Image src={prevImage} alt="Previous Button" />
+        </button>
+        <button class="splide__arrow splide__arrow--next next">
+          <Image src={nextImage} alt="Next Button" />
+        </button>
+      </div>
+    </div>
+
+    <div>
+      <div class="vendor-modal-bg"></div>
+      <div>
+        {
+          vendors.map((vendor: Vendor) => (
+            <div class="vendor-modal" data-vendor_id={vendor.id}>
+              <button class="btn-vendor-modal-close">
+                <Image
+                  loading="eager"
+                  src={vendorCloseImage}
+                  alt="Close Modal Button"
+                />
+              </button>
+              <h3 aria-label={`${vendor.name}の紹介`}>{vendor.name}</h3>
+              <p
+                set:html={vendor.introduction
+                  .replace(/\n/g, "<br>")
+                  .replace(/<a /g, '<a style="color: rgb(194 18 68)" ')}
+              />
+              {(vendor.instagram_url ||
+                vendor.facebook_url ||
+                vendor.site_url) && (
+                <div class="sns-list">
+                  <h4 aria-label={`${vendor.name}のSNS/Web`}>SNS/Web</h4>
+                  <ul class="sns-list--inner">
+                    {vendor.instagram_url && (
+                      <li>
+                        <a
+                          href={vendor.instagram_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <Image src={instagramImage} alt="Instagram" />
+                        </a>
+                      </li>
+                    )}
+
+                    {vendor.facebook_url && (
+                      <li>
+                        <a
+                          href={vendor.facebook_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <Image src={facebookImage} alt="Facebook" />
+                        </a>
+                      </li>
+                    )}
+                    {vendor.site_url && (
+                      <li>
+                        <a
+                          href={vendor.site_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <Image src={siteImage} alt="Website" />
+                        </a>
+                      </li>
+                    )}
+                  </ul>
+                </div>
+              )}
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  .l-slide-outer {
+    // padding: 0 16rem;
+    position: relative;
+  }
+
+  .splide__track {
+    padding-top: 12rem;
+    padding-bottom: 24rem;
+  }
+
+  .vendor-modal-bg {
+    position: fixed;
+    z-index: var(--z-index-modal-bg);
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(3rem);
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .vendor-modal {
+    overflow-y: auto;
+    position: fixed;
+    z-index: var(--z-index-modal);
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    width: calc(100% - 16rem);
+    max-width: calc(100% - 32rem);
+    max-height: calc(100% - 32rem);
+    padding: 16rem 12rem 24rem;
+    background-color: white;
+    border-radius: 12rem;
+    box-shadow: 0 0 20rem rgb(255, 255, 255, 0.75);
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    h3 {
+      color: var(--color-main);
+      font-weight: bold;
+      font-size: 20rem;
+      margin-bottom: 8rem;
+      padding-bottom: 4rem;
+      border-bottom: 1rem solid var(--color-main);
+    }
+
+    p {
+      font-size: 14rem;
+
+      a {
+        color: var(--color-main);
+        text-decoration: underline;
+      }
+    }
+
+    @include g.mq() {
+      width: 800rem;
+      padding: 24rem 32rem;
+
+      h3 {
+        font-size: 24rem;
+      }
+
+      p {
+        font-size: 16rem;
+      }
+    }
+  }
+
+  .btn-vendor-modal-close {
+    position: sticky;
+    display: grid;
+    place-items: center;
+    top: 0rem;
+    left: calc(100% - 40rem);
+    width: 40rem;
+    aspect-ratio: 1 / 1;
+    background-color: white;
+    border-radius: 100%;
+    overflow: hidden;
+
+    img {
+      width: 20rem;
+      aspect-ratio: 1 / 1;
+    }
+
+    transition: box-shadow 0.3s ease;
+    &:hover {
+      box-shadow: 0 0 10rem rgb(0 0 0 / 0.2);
+    }
+  }
+
+  .sns-list {
+    margin-top: 16rem;
+
+    h4 {
+      font-size: 18rem;
+      font-weight: bold;
+      color: var(--color-main);
+      margin-bottom: 8rem;
+    }
+
+    @include g.mq() {
+      h4 {
+        font-size: 20rem;
+      }
+    }
+  }
+
+  .sns-list--inner {
+    display: flex;
+    flex-direction: row;
+    gap: 8rem;
+
+    li {
+      width: 42rem;
+      aspect-ratio: 1 / 1;
+      a {
+        display: block;
+        width: 100%;
+        aspect-ratio: 1 / 1;
+      }
+
+      img {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+      }
+
+      transition: opacity 0.3s ease;
+
+      &:hover {
+        opacity: 0.6;
+      }
+    }
+
+    @include g.mq() {
+      li {
+        width: 52rem;
+      }
+    }
+  }
+
+  .arrows {
+    button {
+      width: 32rem;
+      aspect-ratio: 1 / 1;
+      position: absolute;
+      top: 50%;
+      translate: 0 -50%;
+
+      &.prev {
+        left: -15rem;
+      }
+
+      &.next {
+        right: -16rem;
+      }
+
+      // disabled
+      &[disabled] {
+        opacity: 0.4;
+      }
+    }
+  }
+</style>
+
+<script>
+  import { gsap } from "gsap";
+  import "@splidejs/splide/css/core";
+  import Splide from "@splidejs/splide";
+
+  window.addEventListener("load", () => {
+    new Splide(".vendor-splide", {
+      gap: "24rem",
+      autoWidth: true,
+      pagination: false,
+      padding: {
+        left: "24rem",
+        right: "24rem",
+      },
+      breakpoints: {
+        768: {
+          padding: {
+            left: "8rem",
+            right: "8rem",
+          },
+        },
+      },
+    }).mount();
+
+    let currentModal: HTMLDivElement | null = null;
+
+    const getModalById = (id: string) => {
+      var result: HTMLDivElement | null = null;
+      for (let modal of vendorModals) {
+        if (modal.dataset.vendor_id === id) {
+          result = modal;
+          break;
+        }
+      }
+      return result;
+    };
+
+    const openModal = (modal: HTMLDivElement) => {
+      document.body.style.overflow = "hidden";
+      gsap.to(modalBg, {
+        duration: 0.3,
+        opacity: 1,
+        visibility: "visible",
+        pointerEvents: "auto",
+      });
+      gsap.to(modal, {
+        duration: 0.3,
+        opacity: 1,
+        visibility: "visible",
+        pointerEvents: "auto",
+      });
+      currentModal = modal;
+    };
+
+    const closeModal = () => {
+      if (!currentModal) {
+        console.error("No modal is currently open.");
+        return;
+      }
+      document.body.style.overflow = "";
+      gsap
+        .to(modalBg, {
+          duration: 0.3,
+          opacity: 0,
+          pointerEvents: "none",
+        })
+        .then(() => {
+          modalBg.style.visibility = "hidden";
+        });
+      gsap
+        .to(currentModal, {
+          duration: 0.3,
+          opacity: 0,
+          pointerEvents: "none",
+        })
+        .then(() => {
+          currentModal!.style.visibility = "hidden";
+          currentModal = null;
+        });
+    };
+
+    const modalBg = document.querySelector(
+      ".vendor-modal-bg",
+    ) as HTMLDivElement;
+
+    const vendorCards = document.querySelectorAll(
+      ".c-vendor-card button",
+    ) as NodeListOf<HTMLButtonElement>;
+
+    const vendorModals = document.querySelectorAll(
+      ".vendor-modal",
+    ) as NodeListOf<HTMLDivElement>;
+
+    const closeModalButtons = document.querySelectorAll(
+      ".btn-vendor-modal-close",
+    ) as NodeListOf<HTMLButtonElement>;
+
+    vendorCards.forEach((button) => {
+      button.addEventListener("click", () => {
+        const vendorId = button.dataset.vendor_id;
+        if (!vendorId) {
+          console.error("Vendor ID not found on the clicked card.");
+          return;
+        }
+        const modal = getModalById(vendorId);
+        if (modal) {
+          openModal(modal);
+        } else {
+          console.error(`No modal found for vendor ID: ${vendorId}`);
+        }
+      });
+    });
+
+    closeModalButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        closeModal();
+      });
+    });
+  });
+</script>

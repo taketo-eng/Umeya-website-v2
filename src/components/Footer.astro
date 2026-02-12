@@ -1,10 +1,15 @@
 ---
+import { useTranslations } from "../i18n/utils";
+const { currentLocale } = Astro;
+const lang = (currentLocale || "ja") as "ja" | "en" | "de";
+const t = useTranslations(lang);
+
 const menuItems = [
-  { text: "ABOUT", href: "#about" },
-  { text: "SHOPS", href: "#shops" },
-  { text: "HISTORY", href: "#history" },
-  { text: "SCHEDULE & EVENTS", href: "#event" },
-  { text: "ACCESS", href: "#access" },
+  { text: t("nav.about"), href: "#about" },
+  { text: t("nav.vendors"), href: "#shops" },
+  { text: t("nav.history"), href: "#history" },
+  { text: t("nav.events"), href: "#event" },
+  { text: t("nav.access"), href: "#access" },
 ];
 ---
 
@@ -12,14 +17,16 @@ const menuItems = [
   <div class="l-container">
     <div class="c-footer--inner">
       <small class="c-footer--small">
-        ©2023 梅屋 All rights reserved. <br class="hide-md" />
+        ©2023 {lang != "ja" ? "Umeya" : "梅屋"} All rights reserved. <br
+          class="hide-md"
+        />
         Operated by{" "}
         <a
           href="https://yui-r.design"
           target="_blank"
           rel="noopener noreferrer"
         >
-          結リノベデザイン
+          {lang != "ja" ? "YUI-Renovation-Design" : "結リノベデザイン"}
         </a>
       </small>
       <ul class="c-footer--menu">

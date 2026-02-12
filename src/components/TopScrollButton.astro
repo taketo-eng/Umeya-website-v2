@@ -1,21 +1,28 @@
 ---
-
+import { Image } from "astro:assets";
+import topScrollImage from "../assets/top_btn.svg";
 ---
 
 <a class="btn-top-scroll" href="#top">
-  <img class="w-full" src="/top_btn.svg" width="32" height="32" alt="top" />
+  <Image loading="eager" src={topScrollImage} alt="Top Scroll Button" />
 </a>
 
 <style lang="scss">
   .btn-top-scroll {
     position: fixed;
+    display: block;
     right: 16rem;
     bottom: 16rem;
     width: 32rem;
-    aspect-ratio: 1/ 1;
+    aspect-ratio: 1 / 1;
+
+    img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+    }
 
     @include g.mq() {
-      width: 40rem;
+      width: 50rem;
     }
 
     &::before {
@@ -23,7 +30,7 @@
       display: block;
       position: absolute;
       inset: 0;
-      background-color: var(--main);
+      background-color: var(--color-main);
       z-index: -1;
       border-radius: 6rem;
       scale: 1;

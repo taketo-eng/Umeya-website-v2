@@ -2,13 +2,19 @@
 import Title from "../components/Title.astro";
 import ScheduleList from "../components/ScheduleList.astro";
 import { getSchedules } from "../lib/microcms";
+
+import { useTranslations } from "../i18n/utils";
+const { currentLocale } = Astro;
+const lang = (currentLocale || "ja") as "ja" | "en" | "de";
+const t = useTranslations(lang);
+
 // order new -> old
-const schedules = await getSchedules({
+const schedules = await getSchedules(lang, {
   limit: 50,
   orders: "-start_time",
 });
 
-const pastSchedules = await getSchedules({
+const pastSchedules = await getSchedules(lang, {
   limit: 50,
   // end_time, category is event
   filters: `end_time[less_than]${new Date().toISOString()}[and]category[contains]event`,
@@ -18,9 +24,9 @@ const pastSchedules = await getSchedules({
 
 <section id="event" class="l-section">
   <div class="l-container">
-    <Title title="スケジュール・イベント" bgTitle="Schedule & Events" />
+    <Title title={t("title.events")} bgTitle="Schedule & Events" />
     <ScheduleList schedules={schedules} slideName="schedule-splide" />
-    <h3 class="c-title-small">過去のイベント</h3>
+    <h3 class="c-title-small">{t("title.pastEvents")}</h3>
     <ScheduleList schedules={pastSchedules} slideName="past-schedule-splide" />
   </div>
 </section>
@@ -42,15 +48,17 @@ const pastSchedules = await getSchedules({
   import "@splidejs/splide/css/core";
   import Splide from "@splidejs/splide";
 
-  const scheduleSplide = new Splide(".schedule-splide", {
-    gap: "24rem",
-    autoWidth: true,
-    pagination: false,
-  }).mount();
+  window.addEventListener("load", () => {
+    const scheduleSplide = new Splide(".schedule-splide", {
+      gap: "24rem",
+      autoWidth: true,
+      pagination: false,
+    }).mount();
 
-  const pastScheduleSplide = new Splide(".past-schedule-splide", {
-    gap: "24rem",
-    autoWidth: true,
-    pagination: false,
-  }).mount();
+    const pastScheduleSplide = new Splide(".past-schedule-splide", {
+      gap: "24rem",
+      autoWidth: true,
+      pagination: false,
+    }).mount();
+  });
 </script>

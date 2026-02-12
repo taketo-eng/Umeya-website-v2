@@ -1,11 +1,25 @@
 ---
+import { languages } from "../i18n/ui";
+import { Image } from "astro:assets";
+import logoImage from "../assets/logo_square_w.svg";
+
+import { useTranslations } from "../i18n/utils";
+const { currentLocale } = Astro;
+const lang = (currentLocale || "ja") as "ja" | "en" | "de";
+const t = useTranslations(lang);
+
+// other languages list
+const otherLanguages = Object.keys(languages).filter(
+  (language) => language !== lang,
+);
+
 const menuItems = [
   { text: "TOP", href: "#top", target: "_self", rel: "" },
-  { text: "ABOUT", href: "#about", target: "_self", rel: "" },
-  { text: "SHOPS", href: "#shops", target: "_self", rel: "" },
-  { text: "HISTORY", href: "#history", target: "_self", rel: "" },
-  { text: "SCHEDULE & EVENTS", href: "#event", target: "_self", rel: "" },
-  { text: "ACCESS", href: "#access", target: "_self", rel: "" },
+  { text: t("nav.about"), href: "#about", target: "_self", rel: "" },
+  { text: t("nav.history"), href: "#history", target: "_self", rel: "" },
+  { text: t("nav.vendors"), href: "#vendors", target: "_self", rel: "" },
+  { text: t("nav.events"), href: "#event", target: "_self", rel: "" },
+  { text: t("nav.access"), href: "#access", target: "_self", rel: "" },
   {
     text: "FACEBOOK",
     href: "https://www.facebook.com/umeya.kurogi",
@@ -25,12 +39,7 @@ const menuItems = [
   <div class="header-logo">
     <h1>
       <a href="#top">
-        <img
-          src="/logo_square_w.svg"
-          width="100"
-          height="100"
-          alt="古民家梅屋"
-        />
+        <Image loading="eager" src={logoImage} alt="古民家梅屋" />
       </a>
     </h1>
   </div>
@@ -53,7 +62,26 @@ const menuItems = [
           </li>
         ))
       }
-      <!-- <li>TODO: locale buttons</li> -->
+      <li>
+        {
+          otherLanguages.map((language) => (
+            <a
+              class="language-link"
+              href={`/${language == "ja" ? "" : language}`}
+            >
+              {language === "ja"
+                ? "日本語"
+                : language === "en"
+                  ? "English"
+                  : "Deutsch"}
+              <span />
+              <span />
+              <span />
+              <span />
+            </a>
+          ))
+        }
+      </li>
     </ul>
   </nav>
 </header>
@@ -197,7 +225,7 @@ const menuItems = [
     height: 200%;
     translate: -50% -50%;
     background-color: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(3px);
+    backdrop-filter: blur(3rem);
     border-radius: 100%;
     scale: 0;
 
@@ -238,7 +266,7 @@ const menuItems = [
         line-height: 28rem;
 
         a,
-        button {
+        .language-link {
           cursor: pointer;
           display: inline-block;
           width: 100%;
@@ -263,7 +291,7 @@ const menuItems = [
           gap: 8rem;
 
           a,
-          button {
+          .language-link {
             padding-top: 8rem;
             padding-bottom: 8rem;
           }
@@ -272,7 +300,7 @@ const menuItems = [
             display: none;
           }
 
-          button {
+          .language-link {
             position: relative;
 
             span {

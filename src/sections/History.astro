@@ -1,49 +1,40 @@
 ---
 import Title from "../components/Title.astro";
+import { Picture } from "astro:assets";
+import historyImage from "../assets/sections/history.webp";
+
+import { useTranslations } from "../i18n/utils";
+const { currentLocale } = Astro;
+const lang = (currentLocale || "ja") as "ja" | "en" | "de";
+const t = useTranslations(lang);
 ---
 
 <section id="history" class="l-section">
   <div class="l-container">
-    <Title title="梅屋の歴史" bgTitle="history" />
+    <Title title={t("title.history")} bgTitle="HISTORY" />
     <div class="l-col-row-outer">
       <div class="l-col-row-container reverse">
         <div>
-          <picture>
-            <source
-              srcset="/sections/history.webp"
-              width="800"
-              height="549"
-              media="(min-width: 1024px)"
-            />
-            <img
-              src="/sections/history.webp"
-              width="500"
-              height="343"
-              alt="梅屋の冬景色"
-            />
-          </picture>
+          <Picture src={historyImage} alt="梅屋の写真" />
         </div>
         <div>
           <ul class="history-list">
             <li>
-              <h3>明治期</h3>
+              <h3>{t("history.meiji.title")}</h3>
               <p>
-                1902年(明治35年)に主屋が建築され、<b>油屋という料亭</b
-                >が営まれていました
+                {t("history.meiji.content")}
               </p>
             </li>
             <li>
-              <h3>大正期</h3>
+              <h3>{t("history.taisho.title")}</h3>
               <p>
-                それまで料亭を営んでいた町家を<b>松延新三郎</b>が買い取り、<b
-                  >梅屋</b
-                >と号して薬種商を営み始め、薬やダイナマイトなどの火薬類を取り扱っていました
+                {t("history.taisho.content")}
               </p>
             </li>
             <li>
-              <h3>昭和期</h3>
+              <h3>{t("history.showa.title")}</h3>
               <p>
-                1902年(明治35年)に主屋が建築され、油屋という料亭が営まれていました
+                {t("history.showa.content")}
               </p>
             </li>
           </ul>

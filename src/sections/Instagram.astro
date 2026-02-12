@@ -1,6 +1,12 @@
 ---
 import Title from "../components/Title.astro";
 import { getInstagramPosts } from "../lib/instagram";
+import { Image } from "astro:assets";
+
+import { useTranslations } from "../i18n/utils";
+const { currentLocale } = Astro;
+const lang = (currentLocale || "ja") as "ja" | "en" | "de";
+const t = useTranslations(lang);
 
 const instagramData = await getInstagramPosts();
 ---
@@ -9,7 +15,7 @@ const instagramData = await getInstagramPosts();
   instagramData && (
     <section id="instagram" class="l-section">
       <div class="l-container">
-        <Title title="インスタグラム" bgTitle="Instagram" />
+        <Title title={t("title.instagram")} bgTitle="Instagram" />
         <div class="l-col-row-outer">
           <ul class="i-list">
             {instagramData.map((post) => (
@@ -21,7 +27,17 @@ const instagramData = await getInstagramPosts();
                 >
                   <div class="i-list--item--inner">
                     <div>
-                      <img
+                      <Image
+                        src={
+                          post.media_type != "VIDEO"
+                            ? post.media_url
+                            : post.thumbnail_url
+                        }
+                        alt={post.caption}
+                        width="300"
+                        height="300"
+                      />
+                      {/* <img
                         loading="lazy"
                         src={
                           post.media_type != "VIDEO"
@@ -29,7 +45,7 @@ const instagramData = await getInstagramPosts();
                             : post.thumbnail_url
                         }
                         alt={post.caption}
-                      />
+                      /> */}
                     </div>
                   </div>
                 </a>

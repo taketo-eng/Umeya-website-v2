@@ -15,5 +15,16 @@ export default defineConfig({
         }
       }
     }
+  },
+  i18n: {
+    defaultLocale: "ja",
+    locales: ["ja", "en", "de"],
+    routing: {
+      prefixDefaultLocale: false,
+    },
+    fallback: {
+      en: "ja",
+      de: "ja"
+    }
   }
 });
