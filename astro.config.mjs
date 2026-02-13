@@ -7,9 +7,9 @@ import sitemap from "@astrojs/sitemap";
 // https://astro.build/config
 export default defineConfig({
   site: "https://umeya.life",
-  // build: {
-  //   inlineStylesheets: "always",
-  // },
+  build: {
+    inlineStylesheets: "always",
+  },
   vite: {
     css: {
       preprocessorOptions: {
