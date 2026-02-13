@@ -21,6 +21,7 @@ export type Event = Omit<EventResponse, "title" | "title_en" | "title_de" | "des
 export type VendorResponse = {
   category: string[],
   profile_image: Image,
+  profile_image_sp: Image,
   name: string,
   name_en?: string,
   name_de?: string,

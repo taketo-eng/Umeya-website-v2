@@ -48,12 +48,19 @@ const categoryLocaleText = (category: string) => {
       }
       {categoryLocaleText(vendor.category)}
     </span>
-    <Picture
-      class="c-vendor-card--profile"
+    <Image
+      class="c-vendor-card--profile pc"
       src={vendor.profile_image.url}
-      alt={vendor.name}
       width={vendor.profile_image.width}
       height={vendor.profile_image.height}
+      alt={vendor.name}
+    />
+    <Image
+      class="c-vendor-card--profile"
+      src={vendor.profile_image_sp.url}
+      width={vendor.profile_image_sp.width}
+      height={vendor.profile_image_sp.height}
+      alt={vendor.name}
     />
     <p>
       {vendor.name}
@@ -63,11 +70,22 @@ const categoryLocaleText = (category: string) => {
 </li>
 
 <style lang="scss">
-  .c-vendor-card--profile,
-  .c-vendor-card--profile img {
+  .c-vendor-card--profile {
     display: block;
     width: 100%;
     height: auto;
+
+    &.pc {
+      display: none;
+    }
+
+    @include g.mq() {
+      display: none;
+
+      &.pc {
+        display: block;
+      }
+    }
   }
 
   .c-vendor-card {
