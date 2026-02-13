@@ -28,7 +28,9 @@ const { schedules, slideName } = Astro.props;
                 : t("event.category.open")}
             </span>
             <h3>{content.title}</h3>
-            <p>日付 : {new Date(content.start_time).toLocaleDateString()}</p>
+            <p>
+              日付 : {new Date(content.start_time).toLocaleDateString("ja")}
+            </p>
             <time datetime={content.start_time}>
               時間:{" "}
               {new Date(content.start_time).toLocaleTimeString(undefined, {
