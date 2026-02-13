@@ -1,46 +1,25 @@
-# Astro Starter Kit: Basics
+# 梅屋 web サイト v2
 
-```sh
-npm create astro@latest -- --template basics
-```
+## 使用言語（Languages）
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+HTML, CSS, JavaScript/TypeScript
 
-## 🚀 Project Structure
+## フレームワーク (Frameworks)
 
-Inside of your Astro project, you'll see the following folders and files:
+Astro
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
+## 導入 CMS
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+microCMS  
 
-## 🧞 Commands
+## SNS feed
 
-All commands are run from the root of the project, from a terminal:
+Instagram Graph API  
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## リンク
 
-## 👀 Want to learn more?
+日本語ページは[こちら](https://umeya.life/)  
+English page is [here](https://umeya.life/en)
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+
+![web-image](https://github.com/taketo-eng/Umeya-website/assets/61618401/73bcdaa4-11db-4fa6-a9c8-006d149ce9d2)
