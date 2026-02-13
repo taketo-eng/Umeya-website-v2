@@ -1,6 +1,7 @@
 ---
 import Title from "../components/Title.astro";
-import { Picture } from "astro:assets";
+import { Image } from "astro:assets";
+import aboutSpImage from "../assets/sections/about_sp.webp";
 import aboutImage from "../assets/sections/about.webp";
 
 import { useTranslations } from "../i18n/utils";
@@ -15,7 +16,21 @@ const t = useTranslations(lang);
     <div class="l-col-row-outer">
       <div class="l-col-row-container">
         <div>
-          <Picture loading="eager" src={aboutImage} alt="梅屋の写真" />
+          <Image
+            fetchpriority="high"
+            loading="eager"
+            class="kv pc"
+            src={aboutImage}
+            alt="梅屋の写真"
+          />
+          <Image
+            fetchpriority="high"
+            loading="eager"
+            class="kv"
+            src={aboutSpImage}
+            alt="梅屋の写真"
+          />
+          <!-- <Picture loading="eager" src={aboutImage} alt="梅屋の写真" /> -->
         </div>
         <div>
           <p set:html={t("about.content")} />

@@ -60,6 +60,10 @@
     img {
       width: 100%;
       height: auto;
+
+      &.pc {
+        display: none;
+      }
     }
   }
 
@@ -69,6 +73,15 @@
     &>div {
       &:first-of-type {
         width: 40%;
+      }
+
+      picture,
+      img {
+        display: none;
+
+        &.pc {
+          display: block;
+        }
       }
     }
 

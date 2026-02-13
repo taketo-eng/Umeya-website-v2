@@ -1,7 +1,8 @@
 ---
 import Title from "../components/Title.astro";
-import { Picture } from "astro:assets";
+import { Image } from "astro:assets";
 import historyImage from "../assets/sections/history.webp";
+import historySpImage from "../assets/sections/history_sp.webp";
 
 import { useTranslations } from "../i18n/utils";
 const { currentLocale } = Astro;
@@ -15,7 +16,21 @@ const t = useTranslations(lang);
     <div class="l-col-row-outer">
       <div class="l-col-row-container reverse">
         <div>
-          <Picture src={historyImage} alt="梅屋の写真" />
+          <Image
+            fetchpriority="high"
+            loading="eager"
+            class="kv pc"
+            src={historyImage}
+            alt="梅屋の写真"
+          />
+          <Image
+            fetchpriority="high"
+            loading="eager"
+            class="kv"
+            src={historySpImage}
+            alt="梅屋の写真"
+          />
+          <!-- <Picture src={historyImage} alt="梅屋の写真" /> -->
         </div>
         <div>
           <ul class="history-list">
