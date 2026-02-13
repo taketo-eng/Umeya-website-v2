@@ -8,6 +8,11 @@ export const defaultLang = "ja"
 
 export const ui = {
   ja: {
+    "meta.shortAppName": "梅屋",
+    "meta.appName": "古民家梅屋",
+    "meta.title": "古民家梅屋 | 八女市黒木町",
+    "meta.description": "福岡県八女市黒木町にある「梅屋」は、いつか自分のお店を持ちたい人を応援するチャレンジショップ型シェアスペースです。低リスクで夢への一歩を踏み出し、地域とつながる場所。マルシェやイベントも定期開催中。",
+
     "nav.about": "About",
     "nav.history": "History",
     "nav.vendors": "Vendors",
@@ -56,6 +61,11 @@ export const ui = {
     "access.note": "※ 駐車場：黒木体育センター隣の無料駐車場",
   },
   en: {
+    "meta.shortAppName": "Umeya",
+    "meta.appName": "Umeya",
+    "meta.title": "Umeya | Historic Community Space in Kurogi, Yame City",
+    "meta.description": "Umeya in Yame City is a shared challenge shop supporting dreamers who want to open their own store. A community space in Kurogi connecting people through local goods and events.",
+
     "nav.about": "About",
     "nav.history": "History",
     "nav.vendors": "Vendors",
@@ -100,6 +110,11 @@ Umeya is the place where challengers connect with the community.
     "access.note": "Note: Free parking is available next to the Kurogi Sports Center."
   },
   de: {
+    "meta.shortAppName": "Umeya",
+    "meta.appName": "Umeya",
+    "meta.title": "Umeya | Historisches Begegnungszentrum in Kurogi, Yame",
+    "meta.description": "Umeya in Yame ist ein Shared Space und Sprungbrett für alle, die vom eigenen Laden träumen. Ein Ort der Begegnung in Kurogi, der Menschen und lokale Kultur verbindet.",
+
     "nav.about": "Über uns",
     "nav.history": "Geschichte",
     "nav.vendors": "Anbieter",

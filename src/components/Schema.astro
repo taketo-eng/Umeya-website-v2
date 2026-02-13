@@ -1,0 +1,53 @@
+---
+import { useTranslations } from "../i18n/utils";
+
+// 言語と翻訳関数のセットアップ
+const { currentLocale } = Astro;
+const lang = (currentLocale || "ja") as "ja" | "en" | "de";
+const t = useTranslations(lang);
+
+const shortName = t("meta.shortAppName");
+const name = t("meta.appName");
+const description = t("meta.description");
+const image = "https://umeya.life/logo.png";
+const siteUrl = "https://umeya.life";
+
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness", // または "CommunityCenter"
+  name: name,
+  image: image,
+  url: siteUrl,
+  // telephone: "",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "黒木町黒木37-1",
+    addressLocality: "八女市",
+    addressRegion: "福岡県",
+    postalCode: "834-1217",
+    addressCountry: "JP",
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: 33.21266874635061,
+    longitude: 130.67158372771945,
+  },
+  description: description,
+  // 営業時間
+  // "openingHoursSpecification": [ ... ]
+};
+
+// WebSite
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: name,
+  url: siteUrl,
+  alternateName: shortName,
+};
+
+// まとめて出力用配列にする
+const schemaData = [localBusinessSchema, websiteSchema];
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schemaData)} />

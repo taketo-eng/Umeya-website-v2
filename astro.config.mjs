@@ -1,8 +1,12 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import partytown from "@astrojs/partytown";
+
+import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
+  site: "https://umeya.life",
   vite: {
     css: {
       preprocessorOptions: {
@@ -26,5 +30,22 @@ export default defineConfig({
       en: "ja",
       de: "ja"
     }
-  }
+  },
+  integrations: [
+    partytown({
+      config: {
+        forward: ['dataLayer.push']
+      }
+    }),
+    sitemap({
+      i18n: {
+        defaultLocale: "ja",
+        locales: {
+          ja: 'ja-JP',
+          en: 'en-US',
+          de: 'de-DE',
+        },
+      }
+    })
+  ]
 });
