@@ -5,4 +5,5 @@ export type InstagramPost = {
   thumbnail_url: string
   permalink: string
   caption: string
+  local_image_path: string
 }
