@@ -1,0 +1,14 @@
+name: Daily Build Trigger
+
+on:
+  schedule:
+  # Run at 18:00 UTC every day (AM 3:00 JST)
+    - cron: '0 18 * * *'
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Vercel Deploy Hook
+        run: |
+          curl -X POST "${{ secrets.VERCEL_DEPLOY_HOOK_URL }}"
