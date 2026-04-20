@@ -43,6 +43,7 @@ export default defineConfig({
       }
     }),
     sitemap({
+      filter: (page) => !page.includes('/umeyui-'),
       i18n: {
         defaultLocale: "ja",
         locales: {
