@@ -9,33 +9,33 @@ const client = createClient({
 
 
 
-export const getSchedules = async (locale: string = "ja", queries?: MicroCMSQueries) => {
-  var data = await client.getList<EventResponse>({ endpoint: "schedules", queries })
+// export const getSchedules = async (locale: string = "ja", queries?: MicroCMSQueries) => {
+//   var data = await client.getList<EventResponse>({ endpoint: "schedules", queries })
 
-  const schedules: Event[] = []
-  data.contents.forEach((item) => {
-    if (locale === "ja") {
-      schedules.push({ ...item, category: item.category[0], title: item.title ?? "オープン日", description: item.description ?? "" })
-    }
-    else if (locale === "en") {
-      schedules.push({
-        ...item,
-        category: item.category[0],
-        title: item.title_en ?? item.title ?? "Open Day",
-        description: item.description_en ?? item.description ?? "",
-      })
-    }
-    else if (locale === "de") {
-      schedules.push({
-        ...item,
-        category: item.category[0],
-        title: item.title_de ?? item.title ?? "Eröffnungstag",
-        description: item.description_de ?? item.description ?? "",
-      })
-    }
-  })
-  return schedules
-}
+//   const schedules: Event[] = []
+//   data.contents.forEach((item) => {
+//     if (locale === "ja") {
+//       schedules.push({ ...item, category: item.category[0], title: item.title ?? "オープン日", description: item.description ?? "" })
+//     }
+//     else if (locale === "en") {
+//       schedules.push({
+//         ...item,
+//         category: item.category[0],
+//         title: item.title_en ?? item.title ?? "Open Day",
+//         description: item.description_en ?? item.description ?? "",
+//       })
+//     }
+//     else if (locale === "de") {
+//       schedules.push({
+//         ...item,
+//         category: item.category[0],
+//         title: item.title_de ?? item.title ?? "Eröffnungstag",
+//         description: item.description_de ?? item.description ?? "",
+//       })
+//     }
+//   })
+//   return schedules
+// }
 
 export const getVendors = async (locale: string = "ja", queries?: MicroCMSQueries) => {
   const data = await client.getList<VendorResponse>({ endpoint: "vendors", queries })

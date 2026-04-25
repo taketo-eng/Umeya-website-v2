@@ -16,14 +16,14 @@ export const ui = {
     "nav.about": "About",
     "nav.history": "History",
     "nav.vendors": "Vendors",
-    "nav.events": "Schedule & Events",
+    "nav.events": "Pop-ups & Events",
     "nav.access": "Access",
 
     "title.about": "梅屋について",
     "title.history": "梅屋の歩み",
     "title.vendors": "出店者のご紹介",
-    "title.events": "スケジュール＆イベント情報",
-    "title.pastEvents": "過去のイベント情報",
+    "title.events": "出店情報",
+    "title.pastEvents": "過去の出店情報",
     "title.access": "アクセス",
     "title.instagram": "インスタグラム",
 
@@ -55,6 +55,8 @@ export const ui = {
 
     "event.category.event": "イベント",
     "event.category.open": "オープン日",
+    "event.vendors_title": "出店者",
+    "event.no_name": "出店日",
 
     "access.address": "福岡県八女市黒木町黒木37",
     "access.accessible": "駐車場から徒歩4分",
@@ -69,14 +71,14 @@ export const ui = {
     "nav.about": "About",
     "nav.history": "History",
     "nav.vendors": "Vendors",
-    "nav.events": "Schedule & Events",
+    "nav.events": "Pop-ups & Events",
     "nav.access": "Access",
 
     "title.about": "About Umeya",
     "title.history": "Umeya's History",
     "title.vendors": "Introduction of Vendors",
-    "title.events": "Schedule & Event Information",
-    "title.pastEvents": "Past Event Information",
+    "title.events": "Upcoming Pop-ups & Events",
+    "title.pastEvents": "Past Pop-ups",
     "title.access": "Access",
     "title.instagram": "Instagram",
 
@@ -102,8 +104,10 @@ Umeya is the place where challengers connect with the community.
     "vendor.category.goods": "Goods",
     "vendor.category.other": "Other",
 
-    "event.category.event": "Event",
-    "event.category.open": "Open Day",
+    // "event.category.event": "Event",
+    // "event.category.open": "Open Day",
+    "event.vendors_title": "Vendors",
+    "event.no_name": "Open Day",
 
     "access.address": "37 Kurogi, Kurogi-machi, Yame City, Fukuoka",
     "access.accessible": "4-minute walk from the parking lot",
@@ -118,14 +122,14 @@ Umeya is the place where challengers connect with the community.
     "nav.about": "Über uns",
     "nav.history": "Geschichte",
     "nav.vendors": "Anbieter",
-    "nav.events": "Termine & Events",
+    "nav.events": "Pop-up Termine",
     "nav.access": "Anfahrt",
 
     "title.about": "Über Umeya",
     "title.history": "Umeyas Geschichte",
     "title.vendors": "Vorstellung der Anbieter",
-    "title.events": "Termine & Veranstaltungsinformationen",
-    "title.pastEvents": "Vergangene Veranstaltungsinformationen",
+    "title.events": "Pop-up Termine",
+    "title.pastEvents": "Vergangene Pop-ups",
     "title.access": "Anfahrt",
     "title.instagram": "Instagram",
 
@@ -153,6 +157,8 @@ Umeya ist der Ort, der Mutige mit der Region verbindet.
 
     "event.category.event": "Veranstaltung",
     "event.category.open": "Eröffnungstag",
+    "event.vendors_title": "Anbieter",
+    "event.no_name": "Eröffnungstag",
 
     "access.address": "37 Kurogi, Kurogi-machi, Yame-shi, Fukuoka",
     "access.accessible": "4 Gehminuten vom Parkplatz",
