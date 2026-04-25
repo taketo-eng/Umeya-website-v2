@@ -13,7 +13,8 @@ export type Participant = {
 
 export type Vendor = {
   id: string,
-  bio: string,
+  category: string,
+  homepage_bio: string,
   homepage_avatar_url?: string,
   website_url?: string,
   instagram_url?: string,
