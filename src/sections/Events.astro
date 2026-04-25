@@ -2,7 +2,7 @@
 import Title from "../components/Title.astro";
 import ScheduleList from "../components/ScheduleList.astro";
 import { getSchedules } from "../lib/microcms";
-import { getEvents } from "../lib/umeyui";
+import { getEvents, getPastEvents } from "../lib/umeyui";
 
 import { useTranslations } from "../i18n/utils";
 const { currentLocale } = Astro;
@@ -16,7 +16,7 @@ const schedules = await getSchedules(lang, {
 });
 
 const events = await getEvents();
-console.log(events);
+const pastEvents = await getPastEvents();
 
 const pastSchedules = await getSchedules(lang, {
   limit: 50,
