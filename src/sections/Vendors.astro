@@ -1,13 +1,14 @@
 ---
 import Title from "../components/Title.astro";
 import VendorCard from "../components/VendorCard.astro";
-import { getVendors } from "../lib/microcms";
-import { getVendors as getUmeyuiVendors } from "../lib/umeyui";
-import type { Vendor } from "../lib/types/microcms";
+import { getVendors } from "../lib/umeyui";
+import type { Vendor } from "../lib/types/umeyui";
 import { Image } from "astro:assets";
 import vendorCloseImage from "../assets/close-main.svg";
 import instagramImage from "../assets/sns/instagram.svg";
 import facebookImage from "../assets/sns/facebook.svg";
+import xImage from "../assets/sns/x.svg";
+import lineImage from "../assets/sns/line.svg";
 import siteImage from "../assets/sns/site.svg";
 import prevImage from "../assets/prev.svg";
 import nextImage from "../assets/next.svg";
@@ -17,9 +18,7 @@ const { currentLocale } = Astro;
 const lang = (currentLocale || "ja") as "ja" | "en" | "de";
 const t = useTranslations(lang);
 
-const vendors = await getVendors(lang);
-const umeyuiVendors = await getUmeyuiVendors();
-// console.log(umeyuiVendors);
+const umeyuiVendors = await getVendors();
 ---
 
 <section id="vendors" class="l-section">
@@ -28,7 +27,11 @@ const umeyuiVendors = await getUmeyuiVendors();
     <div class="l-slide-outer splide vendor-splide">
       <div class="splide__track">
         <ul class="l-slide splide__list">
-          {vendors.map((vendor: Vendor) => <VendorCard vendor={vendor} />)}
+          {
+            umeyuiVendors.map((vendor: Vendor) => (
+              <VendorCard vendor={vendor} />
+            ))
+          }
         </ul>
       </div>
 
@@ -46,7 +49,7 @@ const umeyuiVendors = await getUmeyuiVendors();
       <div class="vendor-modal-bg"></div>
       <div>
         {
-          vendors.map((vendor: Vendor) => (
+          umeyuiVendors.map((vendor: Vendor) => (
             <div class="vendor-modal" data-vendor_id={vendor.id}>
               <button class="btn-vendor-modal-close">
                 <Image
@@ -55,17 +58,26 @@ const umeyuiVendors = await getUmeyuiVendors();
                   alt="Close Modal Button"
                 />
               </button>
-              <h3 aria-label={`${vendor.name}の紹介`}>{vendor.name}</h3>
-              <p
-                set:html={vendor.introduction
-                  .replace(/\n/g, "<br>")
-                  .replace(/<a /g, '<a style="color: rgb(194 18 68)" ')}
-              />
+              <h3 aria-label={`${vendor.shop_name}の紹介`}>
+                {vendor.shop_name}
+              </h3>
+              {vendor.homepage_bio ? (
+                <p
+                  set:html={vendor.homepage_bio
+                    .replace(/\n/g, "<br>")
+                    .replace(/<a /g, '<a style="color: rgb(194 18 68)" ')}
+                />
+              ) : (
+                <p>{t("vendor.no_bio")}</p>
+              )}
+
               {(vendor.instagram_url ||
                 vendor.facebook_url ||
-                vendor.site_url) && (
+                vendor.x_url ||
+                vendor.line_url ||
+                vendor.website_url) && (
                 <div class="sns-list">
-                  <h4 aria-label={`${vendor.name}のSNS/Web`}>SNS/Web</h4>
+                  <h4 aria-label={`${vendor.shop_name}のSNS/Web`}>SNS/Web</h4>
                   <ul class="sns-list--inner">
                     {vendor.instagram_url && (
                       <li>
@@ -78,7 +90,17 @@ const umeyuiVendors = await getUmeyuiVendors();
                         </a>
                       </li>
                     )}
-
+                    {vendor.x_url && (
+                      <li>
+                        <a
+                          href={vendor.x_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <Image src={xImage} alt="X" />
+                        </a>
+                      </li>
+                    )}
                     {vendor.facebook_url && (
                       <li>
                         <a
@@ -90,10 +112,21 @@ const umeyuiVendors = await getUmeyuiVendors();
                         </a>
                       </li>
                     )}
-                    {vendor.site_url && (
+                    {vendor.line_url && (
                       <li>
                         <a
-                          href={vendor.site_url}
+                          href={vendor.line_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <Image src={lineImage} alt="Line" />
+                        </a>
+                      </li>
+                    )}
+                    {vendor.website_url && (
+                      <li>
+                        <a
+                          href={vendor.website_url}
                           target="_blank"
                           rel="noopener noreferrer"
                         >
@@ -240,6 +273,7 @@ const umeyuiVendors = await getUmeyuiVendors();
         display: block;
         width: 100%;
         aspect-ratio: 1 / 1;
+        cursor: pointer;
       }
 
       img {
@@ -251,12 +285,6 @@ const umeyuiVendors = await getUmeyuiVendors();
 
       &:hover {
         opacity: 0.6;
-      }
-    }
-
-    @include g.mq() {
-      li {
-        width: 52rem;
       }
     }
   }

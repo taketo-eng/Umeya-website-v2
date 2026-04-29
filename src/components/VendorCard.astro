@@ -1,42 +1,40 @@
 ---
-import type { Vendor } from "../lib/types/microcms.ts";
+import type { Vendor, VendorCategory } from "../lib/types/umeyui.ts";
+import { categoryLocaleKeyMap } from "../lib/umeyui.ts";
 const { vendor } = Astro.props as { vendor: Vendor };
 
-import { Picture, Image } from "astro:assets";
+import { Image } from "astro:assets";
 import arrowImage from "../assets/arrow-white.svg";
 import foodImage from "../assets/vendor-category/food.svg";
 import cafeImage from "../assets/vendor-category/coffee.svg";
+import defaultVendor from "../assets/default-vendor.webp";
 
 import { useTranslations } from "../i18n/utils";
 const { currentLocale } = Astro;
 const lang = (currentLocale || "ja") as "ja" | "en" | "de";
 const t = useTranslations(lang);
 
-const categoriesWithImage = ["飲食", "カフェ"];
-const categoryClass = (category: string) => {
-  return {
-    飲食: "food",
-    カフェ: "cafe",
-    物販: "goods",
-    その他: "other",
-  }[category];
-};
-const categoryLocaleText = (category: string) => {
-  return {
-    飲食: t("vendor.category.food"),
-    カフェ: t("vendor.category.cafe"),
-    物販: t("vendor.category.goods"),
-    その他: t("vendor.category.other"),
-  }[category];
+// const categoriesWithImage = ["飲食", "カフェ"];
+// const categoryClass = (category: string) => {
+//   return {
+//     飲食: "food",
+//     カフェ: "cafe",
+//     物販: "goods",
+//     その他: "other",
+//   }[category];
+// };
+const categoryLocaleText = (category: VendorCategory) => {
+  return t(categoryLocaleKeyMap[category].labelKey);
 };
 ---
 
 <li class="c-vendor-card splide__slide">
   <button type="button" data-vendor_id={vendor.id}>
     <span
-      class={`vendor-category-tag ${categoryClass(vendor.category) ? categoryClass(vendor.category) : ""}`}
+      style={`background-color: ${categoryLocaleKeyMap[vendor.category].color}`}
+      class="vendor-category-tag"
     >
-      {
+      <!-- {
         categoriesWithImage.includes(vendor.category) && (
           <Image
             src={vendor.category == "飲食" ? foodImage : cafeImage}
@@ -45,25 +43,30 @@ const categoryLocaleText = (category: string) => {
             alt={vendor.category}
           />
         )
-      }
+      } -->
       {categoryLocaleText(vendor.category)}
     </span>
-    <Image
-      class="c-vendor-card--profile pc"
-      src={vendor.profile_image.url}
-      width={vendor.profile_image.width}
-      height={vendor.profile_image.height}
-      alt={vendor.name}
-    />
-    <Image
-      class="c-vendor-card--profile"
-      src={vendor.profile_image_sp.url}
-      width={vendor.profile_image_sp.width}
-      height={vendor.profile_image_sp.height}
-      alt={vendor.name}
-    />
+    {
+      vendor.homepage_avatar_url ? (
+        <Image
+          class="c-vendor-card--profile"
+          src={vendor.homepage_avatar_url}
+          alt={vendor.shop_name}
+          inferSize={true}
+        />
+      ) : (
+        <Image
+          class="c-vendor-card--profile"
+          src={defaultVendor}
+          width={600}
+          height={900}
+          alt={vendor.shop_name}
+        />
+      )
+    }
+
     <p>
-      {vendor.name}
+      {vendor.shop_name}
       <Image class="c-vendor-card--arrow" src={arrowImage} alt="Arrow" />
     </p>
   </button>
@@ -74,18 +77,6 @@ const categoryLocaleText = (category: string) => {
     display: block;
     width: 100%;
     height: auto;
-
-    &.pc {
-      display: none;
-    }
-
-    @include g.mq() {
-      display: none;
-
-      &.pc {
-        display: block;
-      }
-    }
   }
 
   .c-vendor-card {
@@ -150,21 +141,21 @@ const categoryLocaleText = (category: string) => {
 
     background-color: rgba(68, 68, 68, 0.7);
 
-    &.food {
-      background-color: rgba(206, 126, 51, 0.7);
-    }
+    // &.food {
+    //   background-color: rgba(206, 126, 51, 0.7);
+    // }
 
-    &.cafe {
-      background-color: rgba(150, 107, 80, 0.7);
-    }
+    // &.cafe {
+    //   background-color: rgba(150, 107, 80, 0.7);
+    // }
 
-    &.goods {
-      background-color: rgba(80, 120, 150, 0.7);
-    }
+    // &.goods {
+    //   background-color: rgba(80, 120, 150, 0.7);
+    // }
 
-    &.other {
-      background-color: rgba(128, 108, 143, 0.7);
-    }
+    // &.other {
+    //   background-color: rgba(128, 108, 143, 0.7);
+    // }
   }
 
   .c-vendor-card--arrow {
