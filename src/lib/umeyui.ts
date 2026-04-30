@@ -1,21 +1,33 @@
 import type { CategoryMeta, Event, Vendor, VendorCategory } from "./types/umeyui"
 
 export const getEvents = async (): Promise<Event[]> => {
-  const response = await fetch(`${import.meta.env.UMEYUI_BASE_URL}public/events`)
+  const response = await fetch(`${import.meta.env.UMEYUI_BASE_URL}public/events`, {
+    headers: {
+      'X-API-KEY': import.meta.env.UMEYUI_API_KEY
+    }
+  })
 
   const events: Event[] = (await response.json()).events
   return events
 }
 
 export const getPastEvents = async (): Promise<Event[]> => {
-  const response = await fetch(`${import.meta.env.UMEYUI_BASE_URL}public/past-events`)
+  const response = await fetch(`${import.meta.env.UMEYUI_BASE_URL}public/past-events`, {
+    headers: {
+      'X-API-KEY': import.meta.env.UMEYUI_API_KEY
+    }
+  })
 
   const events: Event[] = (await response.json()).events
   return events
 }
 
 export const getVendors = async (): Promise<Vendor[]> => {
-  const response = await fetch(`${import.meta.env.UMEYUI_BASE_URL}public/vendors`)
+  const response = await fetch(`${import.meta.env.UMEYUI_BASE_URL}public/vendors`, {
+    headers: {
+      'X-API-KEY': import.meta.env.UMEYUI_API_KEY
+    }
+  })
 
   const vendors: Vendor[] = (await response.json()).vendors
   return vendors
